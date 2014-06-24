@@ -13,4 +13,11 @@ class RecipeTest < ActiveSupport::TestCase
 
     assert recipe.foods.include?(food)
   end
+
+  test "recipes knows about its food groups" do
+    recipe = Recipe.new(name: 'cobb salad')
+    food_group = recipe.food_groups.build(name: 'vegetables')
+
+    assert recipe.food_groups.include?(food_group)
+  end
 end

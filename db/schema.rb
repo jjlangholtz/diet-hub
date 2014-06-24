@@ -11,13 +11,28 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140624193323) do
+ActiveRecord::Schema.define(version: 20140624210246) do
+
+  create_table "diets", force: true do |t|
+    t.string   "name"
+    t.text     "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "diets_recipes", id: false, force: true do |t|
+    t.integer "diet_id"
+    t.integer "recipe_id"
+  end
 
   create_table "food_groups", force: true do |t|
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "recipe_id"
   end
+
+  add_index "food_groups", ["recipe_id"], name: "index_food_groups_on_recipe_id"
 
   create_table "foods", force: true do |t|
     t.string   "name"
@@ -29,10 +44,19 @@ ActiveRecord::Schema.define(version: 20140624193323) do
 
   add_index "foods", ["edible_id", "edible_type"], name: "index_foods_on_edible_id_and_edible_type"
 
-  create_table "recipes", force: true do |t|
+  create_table "grocery_lists", force: true do |t|
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "recipes", force: true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "food_group_id"
+  end
+
+  add_index "recipes", ["food_group_id"], name: "index_recipes_on_food_group_id"
 
 end
