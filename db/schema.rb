@@ -11,14 +11,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140624210246) do
+ActiveRecord::Schema.define(version: 20140624221753) do
+
+  create_table "dieters", force: true do |t|
+    t.string   "name"
+    t.integer  "weight"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "diets", force: true do |t|
     t.string   "name"
     t.text     "description"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "dieter_id"
   end
+
+  add_index "diets", ["dieter_id"], name: "index_diets_on_dieter_id"
 
   create_table "diets_recipes", id: false, force: true do |t|
     t.integer "diet_id"
@@ -48,7 +58,10 @@ ActiveRecord::Schema.define(version: 20140624210246) do
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "dieter_id"
   end
+
+  add_index "grocery_lists", ["dieter_id"], name: "index_grocery_lists_on_dieter_id"
 
   create_table "recipes", force: true do |t|
     t.string   "name"

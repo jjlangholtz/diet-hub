@@ -22,4 +22,11 @@ class DietTest < ActiveSupport::TestCase
 
 #   assert diet.recipes.include?(recipe)
 # end
+
+  test "diet knows who its owner is" do
+    dieter = Dieter.new(name: 'josh')
+    diet = dieter.build_diet(name: 'primal')
+
+    assert_equal "josh", diet.dieter.name
+  end
 end
